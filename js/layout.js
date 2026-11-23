@@ -112,7 +112,7 @@
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                window.location.href = "../MAIN.html";
+                window.location.href = "../index.html";
             }
         });
 

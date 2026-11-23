@@ -2290,3 +2290,20 @@ body[data-page="announcements.html"] #main > .g2 > form.card {
 body[data-page="announcements.html"] #ann-list {
     width: 100%;
 }
+
+@media (min-width: 900px) {
+    .shell {
+        display: grid;
+        grid-template-columns: var(--side-w) minmax(0, 1fr);
+        min-height: 100vh;
+    }
+
+    .side {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-col {
+        min-width: 0;
+    }
+}
