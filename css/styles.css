@@ -591,6 +591,19 @@ body.side-open .side {
   }
 }
 
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+  font-weight: 800;
+  font-size: .8rem;
+  flex: none;
+}
+
 .avatar.lg {
   width: 56px;
   height: 56px;
@@ -2034,37 +2047,9 @@ dialog::backdrop {
   display: block;
 }
 
-/* Small Back Button */
+/* Removed auto back button */
 .page-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  width: fit-content;
-  padding: 6px 10px;
-  margin-bottom: 4px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--ink);
-  font: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.page-back:hover {
-  background: var(--surface-2);
-}
-
-.page-back svg {
-  width: 14px;
-  height: 14px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  flex-shrink: 0;
+  display: none !important;
 }
 
 /* GUARD GATE PAGE */
