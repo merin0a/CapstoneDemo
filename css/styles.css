@@ -31,54 +31,6 @@
   --side-w: 248px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0E1614;
-    --surface: #16211E;
-    --surface-2: #1D2A26;
-    --ink: #EAF1EE;
-    --ink-2: #C9D6D1;
-    --muted: #9BB0A9;
-    --line: #2A3A35;
-    --brand: #3CC9A5;
-    --brand-ink: #06201A;
-    --brand-soft: #143A31;
-    --brand-deep: #7FE3C8;
-    --amber: #F0B44C;
-    --amber-soft: #3A2D10;
-    --blue: #7FB0F5;
-    --blue-soft: #13294A;
-    --green: #6FD08C;
-    --green-soft: #12301E;
-    --red: #FF8F86;
-    --red-soft: #3D1815;
-    --shadow: none;
-  }
-}
-
-:root[data-theme="dark"] {
-  --bg: #0E1614;
-  --surface: #16211E;
-  --surface-2: #1D2A26;
-  --ink: #EAF1EE;
-  --ink-2: #C9D6D1;
-  --muted: #9BB0A9;
-  --line: #2A3A35;
-  --brand: #3CC9A5;
-  --brand-ink: #06201A;
-  --brand-soft: #143A31;
-  --brand-deep: #7FE3C8;
-  --amber: #F0B44C;
-  --amber-soft: #3A2D10;
-  --blue: #7FB0F5;
-  --blue-soft: #13294A;
-  --green: #6FD08C;
-  --green-soft: #12301E;
-  --red: #FF8F86;
-  --red-soft: #3D1815;
-  --shadow: none;
-}
-
 /* ---------- 2. Base ---------- */
 *,
 *::before,
