@@ -15,210 +15,63 @@
 
 <body data-role="guard" data-page="gate.html">
 
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="i-home" viewBox="0 0 24 24">
-      <path d="M3 11l9-8 9 8" />
-      <path d="M5 10v10h14V10" />
-      <path d="M10 20v-6h4v6" />
-    </symbol>
-    <symbol id="i-grid" viewBox="0 0 24 24">
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
-    </symbol>
-    <symbol id="i-clipboard" viewBox="0 0 24 24">
-      <rect x="6" y="4" width="12" height="17" rx="2" />
-      <path d="M9 4h6v3H9z" />
-      <path d="M9 12h6M9 16h4" />
-    </symbol>
-    <symbol id="i-calendar" viewBox="0 0 24 24">
-      <rect x="3" y="5" width="18" height="16" rx="2" />
-      <path d="M3 10h18M8 3v4M16 3v4" />
-    </symbol>
-    <symbol id="i-users" viewBox="0 0 24 24">
-      <circle cx="9" cy="8" r="3.5" />
-      <path d="M2.5 20c.5-3.5 3-5.5 6.5-5.5s6 2 6.5 5.5" />
-      <circle cx="17" cy="9" r="2.5" />
-      <path d="M17 14.5c2.5 0 4 1.5 4.5 4.5" />
-    </symbol>
-    <symbol id="i-droplet" viewBox="0 0 24 24">
-      <path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z" />
-    </symbol>
-    <symbol id="i-trash" viewBox="0 0 24 24">
-      <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6" />
-    </symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24">
-      <path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z" />
-      <path d="M10 21h4" />
-    </symbol>
-    <symbol id="i-user" viewBox="0 0 24 24">
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 21c.7-4 4-6 8-6s7.3 2 8 6" />
-    </symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24">
-      <path d="M12 5v14M5 12h14" />
-    </symbol>
-    <symbol id="i-check" viewBox="0 0 24 24">
-      <path d="M5 12.5l4.5 4.5L19 7.5" />
-    </symbol>
-    <symbol id="i-x" viewBox="0 0 24 24">
-      <path d="M6 6l12 12M18 6L6 18" />
-    </symbol>
-    <symbol id="i-camera" viewBox="0 0 24 24">
-      <path d="M4 8h3l2-3h6l2 3h3v11H4z" />
-      <circle cx="12" cy="13" r="3.5" />
-    </symbol>
-    <symbol id="i-shield" viewBox="0 0 24 24">
-      <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" />
-    </symbol>
-    <symbol id="i-chevR" viewBox="0 0 24 24">
-      <path d="M9 5l7 7-7 7" />
-    </symbol>
-    <symbol id="i-chevL" viewBox="0 0 24 24">
-      <path d="M15 5l-7 7 7 7" />
-    </symbol>
-    <symbol id="i-alert" viewBox="0 0 24 24">
-      <path d="M12 4l9 16H3z" />
-      <path d="M12 10v4M12 17v.5" />
-    </symbol>
-    <symbol id="i-clock" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </symbol>
-    <symbol id="i-sliders" viewBox="0 0 24 24">
-      <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
-      <circle cx="16" cy="7" r="2" />
-      <circle cx="8" cy="17" r="2" />
-    </symbol>
-    <symbol id="i-download" viewBox="0 0 24 24">
-      <path d="M12 4v11M7 11l5 5 5-5M5 20h14" />
-    </symbol>
-    <symbol id="i-printer" viewBox="0 0 24 24">
-      <path d="M7 9V4h10v5M7 17H5v-6h14v6h-2" />
-      <rect x="7" y="14" width="10" height="6" />
-    </symbol>
-    <symbol id="i-logout" viewBox="0 0 24 24">
-      <path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9" />
-    </symbol>
-    <symbol id="i-moon" viewBox="0 0 24 24">
-      <path d="M20 14a8 8 0 1 1-10-10 6.5 6.5 0 0 0 10 10z" />
-    </symbol>
-    <symbol id="i-megaphone" viewBox="0 0 24 24">
-      <path d="M3 11v3l12 5V6z" />
-      <path d="M15 9.5c2 .5 3 1.5 3 2.5s-1 2-3 2.5M6 14v5h3v-3" />
-    </symbol>
-    <symbol id="i-wrench" viewBox="0 0 24 24">
-      <path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3 17.7 6.3 21l6.3-6.3a4 4 0 0 0 5.1-5.4l-2.5 2.5-2.7-.7-.7-2.7z" />
-    </symbol>
-    <symbol id="i-copy" viewBox="0 0 24 24">
-      <rect x="8" y="8" width="12" height="12" rx="2" />
-      <path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" />
-    </symbol>
-    <symbol id="i-door" viewBox="0 0 24 24">
-      <path d="M6 21V4h9l3 2v15M3 21h18" />
-      <circle cx="12" cy="13" r=".8" />
-    </symbol>
-    <symbol id="i-info" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 11v5M12 8v.5" />
-    </symbol>
-    <symbol id="i-search" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="6.5" />
-      <path d="M16 16l4.5 4.5" />
-    </symbol>
-    <symbol id="i-cpu" viewBox="0 0 24 24">
-      <rect x="6" y="6" width="12" height="12" rx="2" />
-      <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" />
-    </symbol>
-  </svg>
-
   <a class="skip" href="#main">Skip to content</a>
 
   <div class="shell">
     <aside class="side">
-      <div class="brand">
-        <span class="logo">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-home" />
-          </svg>
-        </span>
+      <a class="brand" href="../index.html">
+        <span class="logo"><i data-i="home"></i></span>
         <div>
           <b>Subdivision Connect</b>
           <span class="sub">Carmela Subdivision</span>
         </div>
-      </div>
+      </a>
 
       <nav class="side-nav" aria-label="Main">
         <a class="nv on" href="gate.html" aria-current="page">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-door" />
-          </svg>
+          <i data-i="door"></i>
           <span>Gate</span>
         </a>
         <a class="nv" href="log.html">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-clipboard" />
-          </svg>
+          <i data-i="clipboard"></i>
           <span>Gate log</span>
         </a>
       </nav>
 
       <div class="side-foot">
-        <a class="nv" href="../MAIN.html">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-logout" />
-          </svg>
-          <span>Switch role</span>
-        </a>
         <div class="side-user">
           <span class="avatar">TV</span>
           <span><b>Tony Valdez</b><small>Gate guard</small></span>
         </div>
+        <a class="nv" href="../index.html">
+          <i data-i="log-out"></i>
+          <span>Back to role selection</span>
+        </a>
       </div>
     </aside>
 
     <div class="main-col">
       <header class="topbar">
         <div class="brand">
-          <span class="logo">
-            <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <use href="#i-home" />
-            </svg>
-          </span>
+          <span class="logo"><i data-i="home"></i></span>
           <div><b>Carmela Subdivision</b></div>
         </div>
 
         <div class="top-r">
           <button class="icon-btn" data-theme-toggle aria-label="Toggle dark mode">
-            <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <use href="#i-moon" />
-            </svg>
+            <i data-i="moon"></i>
           </button>
           <button class="icon-btn" data-open="notif" aria-label="Notifications">
-            <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <use href="#i-bell" />
-            </svg>
+            <i data-i="bell"></i>
             <i class="bell-dot"></i>
           </button>
-          <a class="icon-btn" href="../MAIN.html" aria-label="Logout" title="Logout">
-            <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <use href="#i-logout" />
-            </svg>
+          <a class="icon-btn" href="../index.html" aria-label="Logout" title="Logout">
+            <i data-i="log-out"></i>
           </a>
         </div>
       </header>
 
       <main class="view" id="main">
-
         <section class="gate-welcome">
           <div>
             <h2>Good day, Guard Tony</h2>
@@ -233,43 +86,28 @@
         <div class="gate-stats">
           <div class="gate-stat">
             <div class="gate-stat-top">
-              <span class="gate-stat-icon">
-                <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <use href="#i-clock" />
-                </svg>
-              </span>
+              <span class="gate-stat-icon"><i data-i="clock"></i></span>
               <small>Expected</small>
             </div>
-            <strong>2</strong>
+            <strong data-gate-stat="expected">2</strong>
             <small>Visitors expected</small>
           </div>
 
           <div class="gate-stat">
             <div class="gate-stat-top">
-              <span class="gate-stat-icon">
-                <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <use href="#i-users" />
-                </svg>
-              </span>
+              <span class="gate-stat-icon"><i data-i="users"></i></span>
               <small>On site</small>
             </div>
-            <strong>1</strong>
+            <strong data-gate-stat="arrived">1</strong>
             <small>Currently inside</small>
           </div>
 
           <div class="gate-stat">
             <div class="gate-stat-top">
-              <span class="gate-stat-icon">
-                <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <use href="#i-check" />
-                </svg>
-              </span>
+              <span class="gate-stat-icon"><i data-i="check"></i></span>
               <small>Completed</small>
             </div>
-            <strong>1</strong>
+            <strong data-gate-stat="left">1</strong>
             <small>Already left</small>
           </div>
         </div>
@@ -280,11 +118,8 @@
             <p class="muted">Friday, October 23 · Main gate</p>
           </div>
           <div class="head-actions">
-            <button class="btn primary" data-open="walkin">
-              <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <use href="#i-plus" />
-              </svg>
+            <button type="button" class="btn primary" data-open="walkin">
+              <i data-i="plus"></i>
               Log a walk-in
             </button>
           </div>
@@ -296,21 +131,18 @@
 
           <form class="gate-search-form" data-code-lookup>
             <div class="search grow">
-              <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <use href="#i-search" />
-              </svg>
+              <i data-i="search"></i>
               <input class="input" name="code" placeholder="Enter visitor code, e.g. V-2041" required
                 aria-label="Visitor code" autocomplete="off">
             </div>
-            <button class="btn primary">Find visitor</button>
+            <button class="btn primary" type="submit">Find visitor</button>
           </form>
         </section>
 
         <section class="card flush">
           <div class="card-h gate-section-title" style="padding:16px 16px 0">
             <h2>Today's visitors</h2>
-            <span class="chip">4 records</span>
+            <span class="chip" data-gate-total>4 records</span>
           </div>
 
           <div id="gate-list">
@@ -323,8 +155,8 @@
               </div>
               <span data-gate-chip class="chip amber">Expected</span>
               <div class="gate-act">
-                <button class="btn sm primary" data-open-checkin>Check in</button>
-                <button class="btn sm danger" data-gate="denied">Deny</button>
+                <button type="button" class="btn sm primary" data-open-checkin>Check in</button>
+                <button type="button" class="btn sm danger" data-gate="denied">Deny</button>
               </div>
             </div>
 
@@ -337,8 +169,8 @@
               </div>
               <span data-gate-chip class="chip amber">Expected</span>
               <div class="gate-act">
-                <button class="btn sm primary" data-open-checkin>Check in</button>
-                <button class="btn sm danger" data-gate="denied">Deny</button>
+                <button type="button" class="btn sm primary" data-open-checkin>Check in</button>
+                <button type="button" class="btn sm danger" data-gate="denied">Deny</button>
               </div>
             </div>
 
@@ -351,7 +183,7 @@
               </div>
               <span data-gate-chip class="chip green">On site</span>
               <div class="gate-act">
-                <button class="btn sm" data-gate="left">Mark left</button>
+                <button type="button" class="btn sm" data-gate="left">Mark left</button>
               </div>
             </div>
 
@@ -369,32 +201,22 @@
         </section>
 
         <div class="banner gate-help">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-info" />
-          </svg>
+          <i data-i="info"></i>
           <div>
             <strong>Visitor without a code?</strong>
             <p>Ask for an ID, call the resident to confirm, then use Log a walk-in to record the visitor.</p>
           </div>
         </div>
-
       </main>
     </div>
 
     <nav class="bottom" aria-label="Main">
       <a class="bn on" href="gate.html" aria-current="page">
-        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <use href="#i-door" />
-        </svg>
+        <i data-i="door"></i>
         <span>Gate</span>
       </a>
       <a class="bn" href="log.html">
-        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <use href="#i-clipboard" />
-        </svg>
+        <i data-i="clipboard"></i>
         <span>Gate log</span>
       </a>
     </nav>
@@ -404,33 +226,20 @@
     <div class="dlg">
       <div class="dlg-h">
         <h2>Notifications</h2>
-        <button class="icon-btn" data-close aria-label="Close">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-x" />
-          </svg>
+        <button type="button" class="icon-btn" data-close aria-label="Close">
+          <i data-i="x"></i>
         </button>
       </div>
       <div class="list">
         <div class="item unread">
-          <span class="item-ic">
-            <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <use href="#i-bell" />
-            </svg>
-          </span>
+          <span class="item-ic"><i data-i="bell"></i></span>
           <span class="item-main">
             <span class="item-t">Visitor Jose Ramirez is expected at 3:00 PM (V-2041).</span>
             <span class="item-s">today</span>
           </span>
         </div>
         <div class="item">
-          <span class="item-ic">
-            <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <use href="#i-bell" />
-            </svg>
-          </span>
+          <span class="item-ic"><i data-i="bell"></i></span>
           <span class="item-main">
             <span class="item-t">Reminder: log every tricycle and leave an ID.</span>
             <span class="item-s">this week</span>
@@ -445,10 +254,7 @@
       <div class="dlg-h">
         <h2>Check in <span data-who></span></h2>
         <button type="button" class="icon-btn" data-close aria-label="Close">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-x" />
-          </svg>
+          <i data-i="x"></i>
         </button>
       </div>
 
@@ -468,7 +274,7 @@
         <input class="input" name="plate" placeholder="e.g. ABC 123">
       </label>
 
-      <button class="btn primary block lg">Confirm check in</button>
+      <button class="btn primary block lg" type="submit">Confirm check in</button>
     </form>
   </dialog>
 
@@ -477,10 +283,7 @@
       <div class="dlg-h">
         <h2>Log a walk-in</h2>
         <button type="button" class="icon-btn" data-close aria-label="Close">
-          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <use href="#i-x" />
-          </svg>
+          <i data-i="x"></i>
         </button>
       </div>
 
@@ -525,7 +328,7 @@
         <input type="checkbox" class="switch" name="confirmed">
       </label>
 
-      <button class="btn primary block lg">Log entry</button>
+      <button class="btn primary block lg" type="submit">Log entry</button>
     </form>
   </dialog>
 

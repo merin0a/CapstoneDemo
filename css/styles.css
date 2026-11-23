@@ -31,6 +31,29 @@
   --side-w: 248px;
 }
 
+:root[data-theme="dark"] {
+  --bg: #0F1715;
+  --surface: #16211E;
+  --surface-2: #1E2C28;
+  --ink: #EEF4F1;
+  --ink-2: #C7D4CF;
+  --muted: #8FA39C;
+  --line: #293A35;
+  --brand: #18A084;
+  --brand-ink: #071915;
+  --brand-soft: #143A31;
+  --brand-deep: #5CD7BA;
+  --amber: #F5B94C;
+  --amber-soft: #362811;
+  --blue: #76AEFF;
+  --blue-soft: #172A47;
+  --green: #5AD184;
+  --green-soft: #143622;
+  --red: #F57C76;
+  --red-soft: #3D1A18;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .28), 0 6px 20px rgba(0, 0, 0, .24);
+}
+
 /* ---------- 2. Base ---------- */
 *,
 *::before,
@@ -53,6 +76,13 @@ body {
   color: var(--ink);
   font: 400 15px/1.5 var(--font);
   -webkit-font-smoothing: antialiased;
+}
+
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at 5% 5%, rgba(24, 160, 132, 0.14), transparent 45%),
+    radial-gradient(circle at 95% 10%, rgba(245, 185, 76, 0.08), transparent 45%),
+    var(--bg);
 }
 
 h1,
@@ -251,13 +281,15 @@ svg {
   line-height: 1.15;
 }
 
-.brand span.sub {
+.brand span.sub,
+.brand small {
   display: block;
   font-size: .78rem;
   color: var(--muted);
 }
 
-.logo {
+.logo,
+.brand-mark {
   display: grid;
   place-items: center;
   width: 36px;
@@ -265,6 +297,14 @@ svg {
   border-radius: 11px;
   background: var(--brand);
   color: var(--brand-ink);
+  font-weight: 800;
+  flex: none;
+}
+
+.top-l {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .top-r {
@@ -404,7 +444,8 @@ svg {
 @media (min-width: 900px) {
   .shell {
     display: grid;
-    grid-template-columns: var(--side-w) 1fr;
+    grid-template-columns: var(--side-w) minmax(0, 1fr);
+    min-height: 100vh;
   }
 
   .side {
@@ -594,6 +635,11 @@ svg {
 .btn.primary:hover {
   background: var(--brand-deep);
   color: var(--brand-ink);
+}
+
+:root[data-theme="dark"] .btn.primary:hover {
+  background: #148870;
+  color: #fff;
 }
 
 .btn.danger {
@@ -1778,6 +1824,10 @@ dialog::backdrop {
   background: linear-gradient(180deg, #FFE0B8 0%, #FFC784 100%);
 }
 
+:root[data-theme="dark"] .auth {
+  background: linear-gradient(180deg, #111F1C 0%, #0B1412 100%);
+}
+
 .auth-hero {
   flex: none;
   width: 100%;
@@ -1794,6 +1844,12 @@ dialog::backdrop {
   background:
     var(--fam1) left 3% top 8px / min(250px, 42vw) no-repeat,
     linear-gradient(160deg, var(--brand-deep) 0%, var(--brand) 100%);
+}
+
+:root[data-theme="dark"] .auth-hero {
+  background:
+    var(--fam1) left 3% top 8px / min(250px, 42vw) no-repeat,
+    linear-gradient(160deg, #073B2F 0%, #0C6955 100%);
 }
 
 .auth-hero h1 {
@@ -1932,49 +1988,45 @@ dialog::backdrop {
 }
 
 /* Small Back Button */
-
 .page-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    width: fit-content;
-    padding: 6px 10px;
-    margin-bottom: 12px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--surface);
-    color: var(--ink);
-    font: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .page-back:hover {
-    background: var(--surface-2);
+  background: var(--surface-2);
 }
 
 .page-back svg {
-    width: 14px;
-    height: 14px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
 }
 
-
-
 /* GUARD GATE PAGE */
-
 .gate-welcome {
   background: linear-gradient(120deg, #095645, #0C7A63);
   color: white;
   padding: 24px;
   border-radius: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1998,7 +2050,7 @@ dialog::backdrop {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255,255,255,.14);
+  background: rgba(255, 255, 255, .14);
   padding: 9px 13px;
   border-radius: 30px;
   font-size: 12px;
@@ -2016,7 +2068,6 @@ dialog::backdrop {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
-  margin-bottom: 20px;
 }
 
 .gate-stat {
@@ -2059,7 +2110,6 @@ dialog::backdrop {
 
 .gate-search {
   padding: 18px;
-  margin-bottom: 20px;
   border: 1px solid var(--line, #E5EAE7);
   border-radius: 16px;
   background: var(--surface, white);
@@ -2142,7 +2192,6 @@ dialog::backdrop {
   align-items: flex-start;
   padding: 17px;
   border-radius: 15px;
-  margin-top: 18px;
 }
 
 .gate-help svg {
@@ -2233,77 +2282,37 @@ dialog::backdrop {
   }
 }
 
-
 /* Center Admin Announcements */
-
 body[data-page="announcements.html"] .view {
-    width: 100%;
+  width: 100%;
 }
 
 body[data-page="announcements.html"] .page-head {
-    text-align: center;
-    justify-content: center;
+  text-align: center;
+  justify-content: center;
 }
 
-body[data-page="announcements.html"] .g2 {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    width: 100%;
-    max-width: none;
-    margin: 0 auto;
+body[data-page="announcements.html"] #main>.g2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  width: 100%;
 }
 
-body[data-page="announcements.html"] .g2 > form {
-    width: 100%;
-    max-width: 635px;
-    margin: 0 auto;
-}
-
-body[data-page="announcements.html"] .g2 > form > * {
-    width: 100%;
-}
-
-body[data-page="announcements.html"] .g2 > form > h2 {
-    text-align: center;
-}
-
-
-/* FIX: Center Announcement Form on Desktop */
-
-body[data-page="announcements.html"] #main > .g2 {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) !important;
-    justify-items: center !important;
-    width: 100% !important;
-}
-
-body[data-page="announcements.html"] #main > .g2 > form.card {
-    grid-column: 1 / -1 !important;
-    justify-self: center !important;
-    width: 100% !important;
-    max-width: 635px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
+body[data-page="announcements.html"] #main>.g2>form.card,
 body[data-page="announcements.html"] #ann-list {
-    width: 100%;
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 635px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@media (min-width: 900px) {
-    .shell {
-        display: grid;
-        grid-template-columns: var(--side-w) minmax(0, 1fr);
-        min-height: 100vh;
-    }
+body[data-page="announcements.html"] #main>.g2>form.card>* {
+  width: 100%;
+}
 
-    .side {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .main-col {
-        min-width: 0;
-    }
+body[data-page="announcements.html"] #main>.g2>form.card>h2 {
+  text-align: center;
 }
