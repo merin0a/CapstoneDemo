@@ -14,102 +14,330 @@
 </head>
 
 <body data-role="resident" data-page="home.html">
-  <main class="view" id="main">
 
-    <div class="page-head">
-      <div>
-        <h1>Resident Home</h1>
-        <p class="muted">Carmela Subdivision</p>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-home" viewBox="0 0 24 24">
+      <path d="M3 11l9-8 9 8" />
+      <path d="M5 10v10h14V10" />
+      <path d="M10 20v-6h4v6" />
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <circle cx="9" cy="8" r="3.5" />
+      <path d="M2.5 20c.5-3.5 3-5.5 6.5-5.5s6 2 6.5 5.5" />
+      <circle cx="17" cy="9" r="2.5" />
+      <path d="M17 14.5c2.5 0 4 1.5 4.5 4.5" />
+    </symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24">
+      <path d="M12 4l9 16H3z" />
+      <path d="M12 10v4M12 17v.5" />
+    </symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24">
+      <path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3 17.7 6.3 21l6.3-6.3a4 4 0 0 0 5.1-5.4l-2.5 2.5-2.7-.7-.7-2.7z" />
+    </symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24">
+      <rect x="6" y="4" width="12" height="17" rx="2" />
+      <path d="M9 4h6v3H9z" />
+      <path d="M9 12h6M9 16h4" />
+    </symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24">
+      <path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z" />
+      <path d="M10 21h4" />
+    </symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24">
+      <path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9" />
+    </symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24">
+      <path d="M9 5l7 7-7 7" />
+    </symbol>
+  </svg>
+
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="shell">
+
+    <aside class="side">
+
+      <div class="brand">
+        <span class="logo">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <use href="#i-home" />
+          </svg>
+        </span>
+        <div>
+          <b>Subdivision Connect</b>
+          <span class="sub">Carmela Subdivision</span>
+        </div>
       </div>
-      <div class="head-actions">
-        <a class="btn ghost" href="../MAIN.html">Switch Role</a>
+
+      <nav class="side-nav" aria-label="Main">
+        <a class="nv on" href="home.html" aria-current="page">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <use href="#i-home" />
+          </svg>
+          <span>Home</span>
+        </a>
+
+        <a class="nv" href="requests.html">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <use href="#i-clipboard" />
+          </svg>
+          <span>My reports</span>
+        </a>
+
+        <a class="nv" href="visitors.html">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <use href="#i-users" />
+          </svg>
+          <span>Visitors</span>
+        </a>
+      </nav>
+
+      <div class="side-foot">
+        <div class="side-user">
+          <span class="avatar">MS</span>
+          <span>
+            <b>Maria Santos</b>
+            <small>Resident · B3 L12</small>
+          </span>
+        </div>
+
+        <a class="nv" href="../index.html">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <use href="#i-logout" />
+          </svg>
+          <span>Back to role selection</span>
+        </a>
       </div>
+
+    </aside>
+
+    <div class="main-col">
+
+      <header class="topbar">
+        <div class="brand">
+          <span class="logo">
+            <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <use href="#i-home" />
+            </svg>
+          </span>
+          <div><b>Carmela Subdivision</b></div>
+        </div>
+
+        <div class="top-r">
+          <button class="icon-btn" data-open="notif" aria-label="Notifications">
+            <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <use href="#i-bell" />
+            </svg>
+            <i class="bell-dot"></i>
+          </button>
+
+          <a class="icon-btn" href="../index.html" aria-label="Logout">
+            <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <use href="#i-logout" />
+            </svg>
+          </a>
+        </div>
+      </header>
+
+      <main class="view" id="main">
+
+        <section class="gate-welcome">
+          <div>
+            <h2>Good day, Maria</h2>
+            <p>Welcome to your resident dashboard.</p>
+          </div>
+          <div class="gate-live">
+            <span class="gate-live-dot"></span>
+            Resident
+          </div>
+        </section>
+
+        <section class="hello">
+          <p class="muted">Friday, October 23</p>
+          <h1>Hi, Maria</h1>
+          <p class="muted">Block 3, Lot 12</p>
+        </section>
+
+        <div class="quick-grid three">
+          <a class="quick amber" href="request-new.html">
+            <span class="quick-ic"><i data-i="alert"></i></span>
+            <b>Report an issue</b>
+            <small>Flooding, lights, noise…</small>
+          </a>
+
+          <a class="quick blue" href="request-new.html">
+            <span class="quick-ic"><i data-i="wrench"></i></span>
+            <b>Request a repair</b>
+            <small>Leaks, plumbing, yard</small>
+          </a>
+
+          <a class="quick" href="visitors.html">
+            <span class="quick-ic"><i data-i="users"></i></span>
+            <b>Pre-register visitor</b>
+            <small>Get a gate code</small>
+          </a>
+        </div>
+
+        <section class="card">
+          <div class="card-h">
+            <h2>Today</h2>
+          </div>
+
+          <div class="list">
+            <a class="item" href="visitors.html">
+              <span class="item-ic brand"><i data-i="users"></i></span>
+              <span class="item-main">
+                <span class="item-t">1 visitor expected</span>
+                <span class="item-s">Jose Ramirez · code V-2041 · 3:00 PM</span>
+              </span>
+              <i data-i="chevR" class="item-chev"></i>
+            </a>
+          </div>
+        </section>
+
+        <section class="card flush">
+          <div class="card-h" style="padding:16px 16px 0">
+            <h2>Your open reports</h2>
+            <a class="link" href="requests.html">See all</a>
+          </div>
+
+          <div class="list">
+            <a class="item" data-item data-status="in_progress" data-owner="mine" href="request-detail.html">
+              <span class="item-ic amber"><i data-i="alert"></i></span>
+              <span class="item-main">
+                <span class="item-t">Brown water from the taps</span>
+                <span class="item-s">Block 3, Lot 12 · Water supply · 3 d ago</span>
+                <span class="chips">
+                  <span class="chip blue">In progress</span>
+                  <span class="chip red">Urgent</span>
+                  <span class="chip">HOA</span>
+                  <span class="chip">3 affected</span>
+                </span>
+              </span>
+              <i data-i="chevR" class="item-chev"></i>
+            </a>
+
+            <a class="item" data-item data-status="pending" data-owner="mine" href="request-detail.html">
+              <span class="item-ic amber"><i data-i="alert"></i></span>
+              <span class="item-main">
+                <span class="item-t">Stray dogs tearing trash bags</span>
+                <span class="item-s">Block 6 · Stray animals · 1 d ago</span>
+                <span class="chips">
+                  <span class="chip amber">Pending</span>
+                  <span class="chip">LGU / barangay</span>
+                  <span class="chip">2 affected</span>
+                </span>
+              </span>
+              <i data-i="chevR" class="item-chev"></i>
+            </a>
+
+            <a class="item" data-item data-status="pending" data-owner="mine" href="request-detail.html">
+              <span class="item-ic amber"><i data-i="alert"></i></span>
+              <span class="item-main">
+                <span class="item-t">Only one internet provider available</span>
+                <span class="item-s">Block 8 · Internet / utilities · 20 d ago</span>
+                <span class="chips">
+                  <span class="chip amber">Pending</span>
+                  <span class="chip red">Developer · waiting 20 days</span>
+                  <span class="chip">3 affected</span>
+                </span>
+              </span>
+              <i data-i="chevR" class="item-chev"></i>
+            </a>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-h">
+            <h2>What the HOA did lately</h2>
+          </div>
+
+          <div class="stats-row">
+            <div><b>10</b><span>reports in 30 days</span></div>
+            <div><b>2</b><span>resolved</span></div>
+            <div><b>3 days</b><span>average to resolve</span></div>
+            <div><b>3</b><span>waiting on developer</span></div>
+          </div>
+
+          <p class="muted small" style="margin-top:10px">
+            Shared so everyone can see what is being fixed and what is stuck.
+          </p>
+        </section>
+
+      </main>
     </div>
 
-    <section class="hello">
-      <p class="muted">Friday, October 23</p>
-      <h1>Hi, Maria</h1>
-      <p class="muted">Block 3, Lot 12</p>
-    </section>
+    <nav class="bottom" aria-label="Main">
+      <a class="bn on" href="home.html" aria-current="page">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <use href="#i-home" />
+        </svg>
+        <span>Home</span>
+      </a>
 
-    <div class="quick-grid three">
-      <a class="quick amber" href="request-new.html"><span class="quick-ic"><i data-i="alert"></i></span><b>Report an
-          issue</b><small>Flooding, lights, noise…</small></a>
-      <a class="quick blue" href="request-new.html"><span class="quick-ic"><i data-i="wrench"></i></span><b>Request a
-          repair</b><small>Leaks, plumbing, yard</small></a>
-      <a class="quick" href="visitors.html"><span class="quick-ic"><i data-i="users"></i></span><b>Pre-register
-          visitor</b><small>Get a gate code</small></a>
-    </div>
+      <a class="bn" href="requests.html">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <use href="#i-clipboard" />
+        </svg>
+        <span>Reports</span>
+      </a>
 
-    <section class="card">
-      <div class="card-h">
-        <h2>Today</h2>
+      <a class="bn" href="visitors.html">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <use href="#i-users" />
+        </svg>
+        <span>Visitors</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <dialog id="notif">
+    <div class="dlg">
+      <div class="dlg-h">
+        <h2>Notifications</h2>
+        <button class="icon-btn" data-close aria-label="Close">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
       </div>
+
       <div class="list">
-        <a class="item" href="visitors.html">
+        <div class="item unread">
           <span class="item-ic brand"><i data-i="users"></i></span>
-          <span class="item-main"><span class="item-t">1 visitor expected</span><span class="item-s">Jose Ramirez · code
-              V-2041 · 3:00 PM</span></span>
-          <i data-i="chevR" class="item-chev"></i>
-        </a>
+          <span class="item-main">
+            <span class="item-t">Visitor Jose Ramirez is expected at 3:00 PM (V-2041).</span>
+            <span class="item-s">Today</span>
+          </span>
+        </div>
       </div>
-    </section>
+    </div>
+  </dialog>
 
-    <section class="card flush">
-      <div class="card-h" style="padding:16px 16px 0">
-        <h2>Your open reports</h2><a class="link" href="requests.html">See all</a>
-      </div>
-      <div class="list">
-        <a class="item" data-item data-status="in_progress" data-owner="mine" href="request-detail.html">
-          <span class="item-ic amber"><i data-i="alert"></i></span>
-          <span class="item-main">
-            <span class="item-t">Brown water from the taps</span>
-            <span class="item-s">Block 3, Lot 12 · Water supply · 3 d ago</span>
-            <span class="chips"><span class="chip blue">In progress</span><span class="chip red">Urgent</span><span
-                class="chip">HOA</span><span class="chip">3 affected</span></span>
-          </span>
-          <i data-i="chevR" class="item-chev"></i>
-        </a>
-        <a class="item" data-item data-status="pending" data-owner="mine" href="request-detail.html">
-          <span class="item-ic amber"><i data-i="alert"></i></span>
-          <span class="item-main">
-            <span class="item-t">Stray dogs tearing trash bags</span>
-            <span class="item-s">Block 6 · Stray animals · 1 d ago</span>
-            <span class="chips"><span class="chip amber">Pending</span><span class="chip">LGU / barangay</span><span
-                class="chip">2 affected</span></span>
-          </span>
-          <i data-i="chevR" class="item-chev"></i>
-        </a>
-        <a class="item" data-item data-status="pending" data-owner="mine" href="request-detail.html">
-          <span class="item-ic amber"><i data-i="alert"></i></span>
-          <span class="item-main">
-            <span class="item-t">Only one internet provider available</span>
-            <span class="item-s">Block 8 · Internet / utilities · 20 d ago</span>
-            <span class="chips"><span class="chip amber">Pending</span><span class="chip red">Developer · waiting 20
-                days</span><span class="chip">3 affected</span></span>
-          </span>
-          <i data-i="chevR" class="item-chev"></i>
-        </a>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="card-h">
-        <h2>What the HOA did lately</h2>
-      </div>
-      <div class="stats-row">
-        <div><b>10</b><span>reports in 30 days</span></div>
-        <div><b>2</b><span>resolved</span></div>
-        <div><b>3 days</b><span>average to resolve</span></div>
-        <div><b>3</b><span>waiting on developer</span></div>
-      </div>
-      <p class="muted small" style="margin-top:10px">Shared so everyone can see what is being fixed and what is stuck.
-      </p>
-    </section>
-  </main>
+  <div id="toast-root" aria-live="polite"></div>
 
   <script src="../js/layout.js"></script>
   <script src="../js/app.js"></script>
+
 </body>
 
 </html>
