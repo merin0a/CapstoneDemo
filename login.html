@@ -2,126 +2,329 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0C7A63">
-    <title>Log in · Subdivision Connect</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0C7A63">
+  <title>Log in · Subdivision Connect</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-    <link rel="stylesheet" href="./css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="./css/styles.css?v=3">
 </head>
 
 <body>
 
-    <div class="auth">
+  <div class="auth">
 
-        <section class="auth-hero">
-            <div class="brand">
-                <span class="logo">SC</span>
-                <div>
-                    <b>Camella Homes Urdaneta System</b>
-                </div>
+    <section class="auth-hero">
+      <div class="brand">
+        <span class="logo">SC</span>
+        <div>
+          <b>Camella Homes Urdaneta System</b>
+        </div>
+      </div>
+
+      <h1>AI-Assisted Security &amp; Reporting System for Camella Homes Urdaneta</h1>
+
+      <p>
+        Access your dashboard and manage your subdivision activities.
+      </p>
+    </section>
+
+    <section class="auth-side">
+      <div class="auth-card card">
+        <div class="auth-heading">
+          <a href="./index.html" class="btn ghost sm" style="width:auto">
+            ← Back to roles
+          </a>
+
+          <h2 id="login-title" style="margin-top:14px">Log in</h2>
+
+          <p class="muted small" id="login-description">
+            Enter your details to continue.
+          </p>
+        </div>
+
+        <div id="existing-session" class="banner" hidden style="margin-bottom:14px">
+          <div>
+            <b id="session-summary">Signed in</b>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+              <a id="continue-link" class="btn primary sm" href="./index.html">Continue to dashboard</a>
+              <button type="button" id="switch-account-btn" class="btn ghost sm">Use another account</button>
             </div>
+          </div>
+        </div>
 
-            <h1>AI-Assisted Security &amp; Reporting System for Camella Homes Urdaneta</h1>
+        <div id="auth-error" class="banner err" hidden role="alert" style="margin-bottom:12px"></div>
 
-            <p>
-                Access your dashboard and manage your subdivision activities.
-            </p>
-        </section>
+        <form class="stack" id="auth-form">
+          <label class="field" id="name-field" hidden>
+            <span class="field-l">Full name</span>
+            <input class="input" type="text" name="name" maxlength="80" placeholder="e.g. Maria Santos">
+          </label>
 
-        <section class="auth-side">
-            <div class="auth-card card">
-                <div class="auth-heading">
-                    <a href="./index.html" class="btn ghost sm" style="width:auto">
-                        ← Back to roles
-                    </a>
+          <label class="field" id="block-field" hidden>
+            <span class="field-l">Block &amp; Lot</span>
+            <input class="input" type="text" name="blockLot" maxlength="60" placeholder="e.g. Block 3, Lot 12">
+          </label>
 
-                    <h2 id="login-title" style="margin-top:14px">Log in</h2>
+          <label class="field">
+            <span class="field-l">Email</span>
+            <input class="input" type="email" name="email" required placeholder="you@carmela.ph">
+          </label>
 
-                    <p class="muted small" id="login-description">
-                        Enter your details to continue.
-                    </p>
-                </div>
+          <label class="field">
+            <span class="field-l" id="pass-label">Password</span>
+            <input class="input" type="password" name="password" required minlength="6" autocomplete="current-password"
+              placeholder="Enter your password">
+          </label>
 
-                <form class="stack" id="demo-login">
-                    <label class="field">
-                        <span class="field-l">Email</span>
-                        <input class="input" type="email" name="email" required placeholder="you@example.com"
-                            value="demo@carmela.ph">
-                    </label>
+          <button class="btn primary block" type="submit" id="auth-submit">
+            Log in
+          </button>
 
-                    <label class="field">
-                        <span class="field-l">Password</span>
-                        <input class="input" type="password" name="pass" required placeholder="Enter your password"
-                            value="demo1234">
-                    </label>
+          <div id="mode-switch-wrap" hidden style="text-align:center;margin-top:4px">
+            <button type="button" class="link small" id="mode-switch-btn">
+              New resident? Create an account
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
 
-                    <button class="btn primary block" type="submit">
-                        Log in
-                    </button>
-                </form>
-            </div>
-        </section>
+  </div>
 
-    </div>
+  <div id="toast-root" aria-live="polite"></div>
 
-    <div id="toast-root" aria-live="polite"></div>
+  <script>
+    (() => {
+      'use strict';
 
-    <script>
-        try {
-            const t = localStorage.getItem('cc_theme');
-            if (t) document.documentElement.dataset.theme = t;
-        } catch (e) { }
+      try {
+        const t = localStorage.getItem('cc_theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
 
-        const params = new URLSearchParams(window.location.search);
-        const role = params.get("role");
+      const params = new URLSearchParams(window.location.search);
+      const role = params.get('role');
 
-        const roles = {
-            resident: {
-                name: "Resident",
-                description: "Log in to access the Resident Dashboard.",
-                destination: "./resident/home.html",
-                email: "maria.santos@carmela.ph"
-            },
-            admin: {
-                name: "HOA Admin",
-                description: "Log in to access the Admin Dashboard.",
-                destination: "./admin/dashboard.html",
-                email: "admin@carmela.ph"
-            },
-            guard: {
-                name: "Guard",
-                description: "Log in to access Gate Management.",
-                destination: "./guard/gate.html",
-                email: "guard.tony@carmela.ph"
-            }
-        };
-
-        const selectedRole = roles[role];
-
-        if (!selectedRole) {
-            window.location.replace("./index.html");
-        } else {
-            document.getElementById("login-title").textContent =
-                selectedRole.name + " Log in";
-
-            document.getElementById("login-description").textContent =
-                selectedRole.description;
-
-            const emailInput = document.querySelector('#demo-login input[name="email"]');
-            if (emailInput) emailInput.value = selectedRole.email;
+      const roles = {
+        resident: {
+          name: 'Resident',
+          description: 'Sign in to report issues, request repairs, and pre-register visitors.',
+          destination: './resident/home.html'
+        },
+        admin: {
+          name: 'HOA Admin',
+          description: 'Sign in to manage subdivision reports, visitor logs, and announcements.',
+          destination: './admin/dashboard.html'
+        },
+        guard: {
+          name: 'Guard',
+          description: 'Sign in to manage gate check-ins and visitor records.',
+          destination: './guard/gate.html'
         }
+      };
 
-        document.getElementById("demo-login").addEventListener("submit", function (event) {
-            event.preventDefault();
-            if (!selectedRole) return;
-            window.location.href = selectedRole.destination;
-        });
-    </script>
+      const selectedRole = roles[role];
+      if (!selectedRole) {
+        window.location.replace('./index.html');
+        return;
+      }
+
+      const titleEl = document.getElementById('login-title');
+      const descEl = document.getElementById('login-description');
+      const errEl = document.getElementById('auth-error');
+      const form = document.getElementById('auth-form');
+      const nameField = document.getElementById('name-field');
+      const blockField = document.getElementById('block-field');
+      const nameInput = form.elements.name;
+      const blockInput = form.elements.blockLot;
+      const emailInput = form.elements.email;
+      const passInput = form.elements.password;
+      const passLabel = document.getElementById('pass-label');
+      const submitBtn = document.getElementById('auth-submit');
+      const modeSwitchWrap = document.getElementById('mode-switch-wrap');
+      const modeSwitchBtn = document.getElementById('mode-switch-btn');
+      const sessionBox = document.getElementById('existing-session');
+      const sessionSummary = document.getElementById('session-summary');
+      const continueLink = document.getElementById('continue-link');
+      const switchBtn = document.getElementById('switch-account-btn');
+
+      let authMode = 'login'; // 'login' | 'setup' | 'register'
+      let statusData = null;
+
+      function showError(msg) {
+        if (!msg) {
+          errEl.hidden = true;
+          errEl.textContent = '';
+          return;
+        }
+        errEl.textContent = msg;
+        errEl.hidden = false;
+      }
+
+      function applyMode(mode) {
+        authMode = mode;
+        showError('');
+        const suggested = statusData?.suggestedProfile || {};
+
+        if (mode === 'setup') {
+          titleEl.textContent = selectedRole.name + ' First-Run Setup';
+          descEl.textContent = 'Create the initial ' + selectedRole.name.toLowerCase() + ' password to get started.';
+          nameField.hidden = false;
+          nameInput.required = true;
+          nameInput.value = suggested.name || '';
+          blockField.hidden = role !== 'resident';
+          blockInput.required = role === 'resident';
+          blockInput.value = role === 'resident' ? (suggested.blockLot || '') : '';
+          emailInput.value = suggested.email || '';
+          passLabel.textContent = 'Create password (min 6 characters)';
+          passInput.setAttribute('autocomplete', 'new-password');
+          passInput.placeholder = 'Choose a password';
+          passInput.value = '';
+          submitBtn.textContent = 'Create account & continue';
+          modeSwitchWrap.hidden = true;
+        } else if (mode === 'register') {
+          titleEl.textContent = 'Create Resident Account';
+          descEl.textContent = 'Register with your name, block & lot, and email.';
+          nameField.hidden = false;
+          nameInput.required = true;
+          nameInput.value = '';
+          blockField.hidden = false;
+          blockInput.required = true;
+          blockInput.value = '';
+          emailInput.value = '';
+          passLabel.textContent = 'Create password (min 6 characters)';
+          passInput.setAttribute('autocomplete', 'new-password');
+          passInput.placeholder = 'Choose a password';
+          passInput.value = '';
+          submitBtn.textContent = 'Create account';
+          modeSwitchWrap.hidden = false;
+          modeSwitchBtn.textContent = 'Already have an account? Log in';
+        } else {
+          titleEl.textContent = selectedRole.name + ' Log in';
+          descEl.textContent = selectedRole.description;
+          nameField.hidden = true;
+          nameInput.required = false;
+          blockField.hidden = true;
+          blockInput.required = false;
+          emailInput.value = suggested.email || '';
+          passLabel.textContent = statusData?.envAdminConfigured ? 'Admin passcode' : 'Password';
+          passInput.setAttribute('autocomplete', 'current-password');
+          passInput.placeholder = statusData?.envAdminConfigured ? 'Enter admin passcode' : 'Enter your password';
+          passInput.value = '';
+          submitBtn.textContent = 'Log in';
+          modeSwitchWrap.hidden = role !== 'resident';
+          modeSwitchBtn.textContent = 'New resident? Create an account';
+        }
+      }
+
+      modeSwitchBtn.addEventListener('click', () => {
+        applyMode(authMode === 'register' ? 'login' : 'register');
+      });
+
+      switchBtn.addEventListener('click', async () => {
+        try {
+          await fetch('/api/auth/logout', {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'fetch' },
+            credentials: 'same-origin'
+          });
+        } catch (e) {}
+        sessionBox.hidden = true;
+      });
+
+      async function init() {
+        try {
+          const res = await fetch('/api/auth/status?role=' + encodeURIComponent(role), {
+            credentials: 'same-origin'
+          });
+          statusData = await res.json();
+
+          if (statusData.currentUser && statusData.currentUser.role === role) {
+            sessionSummary.textContent = 'Already signed in as ' + statusData.currentUser.name + ' (' + statusData.currentUser.email + ')';
+            continueLink.href = selectedRole.destination;
+            sessionBox.hidden = false;
+          }
+
+          if (!statusData.hasClaimedUser) {
+            applyMode('setup');
+          } else {
+            applyMode('login');
+          }
+        } catch (err) {
+          applyMode('login');
+          showError('Unable to reach the server. Please refresh and try again.');
+        }
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        showError('');
+
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Please wait…';
+
+        try {
+          let endpoint = '/api/auth/login';
+          let payload = {
+            role,
+            email: emailInput.value.trim(),
+            password: passInput.value
+          };
+
+          if (authMode === 'setup') {
+            endpoint = '/api/auth/setup';
+            payload = {
+              role,
+              name: nameInput.value.trim(),
+              blockLot: blockInput.value.trim(),
+              email: emailInput.value.trim(),
+              password: passInput.value
+            };
+          } else if (authMode === 'register') {
+            endpoint = '/api/auth/register';
+            payload = {
+              name: nameInput.value.trim(),
+              blockLot: blockInput.value.trim(),
+              email: emailInput.value.trim(),
+              password: passInput.value
+            };
+          }
+
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'fetch'
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            showError(data.error || 'Authentication failed.');
+            return;
+          }
+
+          window.location.href = selectedRole.destination;
+        } catch (err) {
+          showError('Network error while connecting to the server.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      });
+
+      init();
+    })();
+  </script>
 
 </body>
 
