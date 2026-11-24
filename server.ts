@@ -160,18 +160,26 @@ function parseCookies(header: string | undefined): Record<string, string> {
   return out;
 }
 
-function setSessionCookie(res: Response, payload: SessionPayload): void {
+function buildCookieAttrs(req: Request, maxAge: number): string {
+  const base = `Path=/; Max-Age=${maxAge}; HttpOnly`;
+  if (req.secure) {
+    return `${base}; Secure; SameSite=None; Partitioned`;
+  }
+  return `${base}; SameSite=Lax`;
+}
+
+function setSessionCookie(req: Request, res: Response, payload: SessionPayload): void {
   const token = signSession(payload);
   res.setHeader(
     'Set-Cookie',
-    `${SESSION_COOKIE}=${encodeURIComponent(token)}; Path=/; Max-Age=${SESSION_TTL_SECONDS}; HttpOnly; Secure; SameSite=None; Partitioned`,
+    `${SESSION_COOKIE}=${encodeURIComponent(token)}; ${buildCookieAttrs(req, SESSION_TTL_SECONDS)}`,
   );
 }
 
-function clearSessionCookie(res: Response): void {
+function clearSessionCookie(req: Request, res: Response): void {
   res.setHeader(
     'Set-Cookie',
-    `${SESSION_COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=None; Partitioned`,
+    `${SESSION_COOKIE}=; ${buildCookieAttrs(req, 0)}`,
   );
 }
 
@@ -442,7 +450,7 @@ async function startServer(): Promise<void> {
     saveDb(db);
 
     const session = createSessionFromUser(user);
-    setSessionCookie(res, session);
+    setSessionCookie(req, res, session);
     res.status(201).json({ user: session });
   });
 
@@ -486,7 +494,7 @@ async function startServer(): Promise<void> {
     saveDb(db);
 
     const session = createSessionFromUser(user);
-    setSessionCookie(res, session);
+    setSessionCookie(req, res, session);
     res.status(201).json({ user: session });
   });
 
@@ -518,7 +526,7 @@ async function startServer(): Promise<void> {
           initials: 'AD',
           exp: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS,
         };
-        setSessionCookie(res, session);
+        setSessionCookie(req, res, session);
         res.json({ user: session });
         return;
       }
@@ -534,12 +542,12 @@ async function startServer(): Promise<void> {
     }
 
     const session = createSessionFromUser(user);
-    setSessionCookie(res, session);
+    setSessionCookie(req, res, session);
     res.json({ user: session });
   });
 
-  app.post('/api/auth/logout', (_req, res) => {
-    clearSessionCookie(res);
+  app.post('/api/auth/logout', (req, res) => {
+    clearSessionCookie(req, res);
     res.json({ ok: true });
   });
 

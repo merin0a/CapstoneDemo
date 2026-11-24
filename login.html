@@ -237,12 +237,25 @@
         sessionBox.hidden = true;
       });
 
+      async function fetchAuthStatus() {
+        const url = '/api/auth/status?role=' + encodeURIComponent(role);
+        let res = await fetch(url, { credentials: 'same-origin' });
+        if (res.status >= 500) {
+          await new Promise(r => setTimeout(r, 600));
+          res = await fetch(url, { credentials: 'same-origin' });
+        }
+        const ct = res.headers.get('content-type') || '';
+        if (!res.ok || !ct.includes('application/json')) {
+          const err = new Error(res.status === 404 ? 'API_NOT_FOUND' : 'SERVER_ERROR');
+          err.code = err.message;
+          throw err;
+        }
+        return res.json();
+      }
+
       async function init() {
         try {
-          const res = await fetch('/api/auth/status?role=' + encodeURIComponent(role), {
-            credentials: 'same-origin'
-          });
-          statusData = await res.json();
+          statusData = await fetchAuthStatus();
 
           if (statusData.currentUser && statusData.currentUser.role === role) {
             sessionSummary.textContent = 'Already signed in as ' + statusData.currentUser.name + ' (' + statusData.currentUser.email + ')';
@@ -255,9 +268,17 @@
           } else {
             applyMode('login');
           }
+
+          if (params.get('reason') === 'session') {
+            showError('Please sign in to access this page.');
+          }
         } catch (err) {
           applyMode('login');
-          showError('Unable to reach the server. Please refresh and try again.');
+          if (err && err.code === 'API_NOT_FOUND') {
+            showError('Backend API is not running here. Start the app with "npm run dev" (server.ts) on port 3000.');
+          } else {
+            showError('Unable to reach the backend server. Make sure the server is running and refresh.');
+          }
         }
       }
 
@@ -307,15 +328,28 @@
             body: JSON.stringify(payload)
           });
 
+          const ct = res.headers.get('content-type') || '';
+          if (!ct.includes('application/json')) {
+            showError('Backend API is not running here. Start the app with "npm run dev" (server.ts) on port 3000.');
+            return;
+          }
+
           const data = await res.json().catch(() => ({}));
           if (!res.ok) {
             showError(data.error || 'Authentication failed.');
             return;
           }
 
+          // Confirm the browser stored the session cookie before navigating
+          const verifyRes = await fetch('/api/auth/me', { credentials: 'same-origin' });
+          if (!verifyRes.ok) {
+            showError('Signed in, but your browser blocked the session cookie. Allow cookies or open this app in a full browser tab.');
+            return;
+          }
+
           window.location.href = selectedRole.destination;
         } catch (err) {
-          showError('Network error while connecting to the server.');
+          showError('Network error while connecting to the server. Make sure "npm run dev" is running.');
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;

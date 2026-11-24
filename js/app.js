@@ -1243,12 +1243,12 @@
       const me = await api('/api/auth/me');
       currentUser = me.user;
       if (!currentUser || currentUser.role !== role) {
-        location.replace(`../login.html?role=${encodeURIComponent(role)}`);
+        location.replace(`../login.html?role=${encodeURIComponent(role)}&reason=session`);
         return;
       }
       hydrateUserUI(currentUser);
     } catch (err) {
-      location.replace(`../login.html?role=${encodeURIComponent(role)}`);
+      location.replace(`../login.html?role=${encodeURIComponent(role)}&reason=session`);
       return;
     }
 
