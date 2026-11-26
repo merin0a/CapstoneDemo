@@ -34,7 +34,7 @@
     </section>
 
     <section class="auth-side">
-      <div class="auth-card card">
+      <div class="auth-card card stack">
         <div class="auth-heading">
           <a href="./index.html" class="btn ghost sm" style="width:auto">
             ← Back to roles
@@ -43,25 +43,56 @@
           <h2 id="login-title" style="margin-top:14px">Log in</h2>
 
           <p class="muted small" id="login-description">
-            Enter your details to continue.
+            Checking server status…
           </p>
         </div>
 
-        <form class="stack" id="demo-login">
+        <div class="banner" id="existing-session" hidden>
+          <div class="grow stack" style="gap:8px">
+            <span id="existing-session-text" class="small"></span>
+            <div class="row wrap" style="gap:8px">
+              <button type="button" class="btn primary sm" id="continue-session-btn" hidden>Continue</button>
+              <button type="button" class="btn ghost sm" id="switch-account-btn">Switch account</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="banner err" id="auth-error" role="alert" hidden>
+          <span id="auth-error-text" class="small"></span>
+        </div>
+
+        <form class="stack" id="auth-form">
+          <label class="field" id="name-field" hidden>
+            <span class="field-l">Full name</span>
+            <input class="input" type="text" name="name" maxlength="80" placeholder="e.g. Maria Santos" autocomplete="name">
+          </label>
+
+          <label class="field" id="blocklot-field" hidden>
+            <span class="field-l">Block &amp; Lot</span>
+            <input class="input" type="text" name="blockLot" maxlength="60" placeholder="e.g. Block 3, Lot 12">
+          </label>
+
           <label class="field">
             <span class="field-l">Email</span>
-            <input class="input" type="email" name="email" required placeholder="you@example.com" value="demo@carmela.ph">
+            <input class="input" type="email" name="email" required placeholder="you@carmela.ph" autocomplete="email">
           </label>
 
           <label class="field">
-            <span class="field-l">Password</span>
-            <input class="input" type="password" name="pass" placeholder="Enter your password (optional in demo)">
+            <span class="field-l" id="password-label">Password</span>
+            <input class="input" type="password" name="password" required minlength="6" maxlength="128"
+              placeholder="Enter your password" autocomplete="current-password">
+            <span class="field-h" id="password-hint" hidden></span>
           </label>
 
-          <button class="btn primary block" type="submit">
+          <button class="btn primary block" type="submit" id="submit-btn" disabled>
             Log in
           </button>
         </form>
+
+        <div id="register-toggle-wrap" class="small muted" style="text-align:center" hidden>
+          <span id="register-toggle-label">New resident?</span>
+          <button type="button" class="link" id="register-toggle-btn">Create an account</button>
+        </div>
       </div>
     </section>
 
@@ -70,55 +101,278 @@
   <div id="toast-root" aria-live="polite"></div>
 
   <script>
-    try {
-      const t = localStorage.getItem('cc_theme');
-      if (t) document.documentElement.dataset.theme = t;
-    } catch (e) {}
+    (() => {
+      'use strict';
 
-    const params = new URLSearchParams(window.location.search);
-    const role = params.get("role");
+      try {
+        const t = localStorage.getItem('cc_theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) { }
 
-    const roles = {
-      resident: {
-        name: "Resident",
-        description: "Log in to access the Resident Dashboard.",
-        destination: "./resident/home.html",
-        email: "maria.santos@carmela.ph"
-      },
-      admin: {
-        name: "HOA Admin",
-        description: "Log in to access the Admin Dashboard.",
-        destination: "./admin/dashboard.html",
-        email: "admin@carmela.ph"
-      },
-      guard: {
-        name: "Guard",
-        description: "Log in to access Gate Management.",
-        destination: "./guard/gate.html",
-        email: "guard.tony@carmela.ph"
+      const params = new URLSearchParams(window.location.search);
+      const role = params.get('role');
+      const reason = params.get('reason');
+
+      const roles = {
+        resident: {
+          name: 'Resident',
+          description: 'Log in to access the Resident Dashboard.',
+          destination: './resident/home.html',
+        },
+        admin: {
+          name: 'HOA Admin',
+          description: 'Log in to access the Admin Dashboard.',
+          destination: './admin/dashboard.html',
+        },
+        guard: {
+          name: 'Guard',
+          description: 'Log in to access Gate Management.',
+          destination: './guard/gate.html',
+        },
+      };
+
+      const selectedRole = roles[role];
+      if (!selectedRole) {
+        window.location.replace('./index.html');
+        return;
       }
-    };
 
-    const selectedRole = roles[role];
+      const titleEl = document.getElementById('login-title');
+      const descEl = document.getElementById('login-description');
+      const existingBanner = document.getElementById('existing-session');
+      const existingText = document.getElementById('existing-session-text');
+      const continueBtn = document.getElementById('continue-session-btn');
+      const switchBtn = document.getElementById('switch-account-btn');
+      const errBanner = document.getElementById('auth-error');
+      const errText = document.getElementById('auth-error-text');
+      const form = document.getElementById('auth-form');
+      const nameField = document.getElementById('name-field');
+      const blockLotField = document.getElementById('blocklot-field');
+      const nameInput = form.elements.name;
+      const blockLotInput = form.elements.blockLot;
+      const emailInput = form.elements.email;
+      const passwordInput = form.elements.password;
+      const passwordLabel = document.getElementById('password-label');
+      const passwordHint = document.getElementById('password-hint');
+      const submitBtn = document.getElementById('submit-btn');
+      const regWrap = document.getElementById('register-toggle-wrap');
+      const regLabel = document.getElementById('register-toggle-label');
+      const regBtn = document.getElementById('register-toggle-btn');
 
-    if (!selectedRole) {
-      window.location.replace("./index.html");
-    } else {
-      document.getElementById("login-title").textContent =
-        selectedRole.name + " Log in";
+      let mode = 'login'; // 'setup' | 'login' | 'register'
+      let statusData = null;
 
-      document.getElementById("login-description").textContent =
-        selectedRole.description;
+      function showError(msg) {
+        errText.textContent = msg;
+        errBanner.hidden = false;
+      }
 
-      const emailInput = document.querySelector('#demo-login input[name="email"]');
-      if (emailInput) emailInput.value = selectedRole.email;
-    }
+      function clearError() {
+        errBanner.hidden = true;
+        errText.textContent = '';
+      }
 
-    document.getElementById("demo-login").addEventListener("submit", function (event) {
-      event.preventDefault();
-      if (!selectedRole) return;
-      window.location.href = selectedRole.destination;
-    });
+      function applyMode(nextMode) {
+        mode = nextMode;
+        clearError();
+        const profile = statusData?.suggestedProfile || { name: '', email: '', blockLot: '' };
+
+        if (mode === 'setup') {
+          titleEl.textContent = selectedRole.name + ' First-Run Setup';
+          descEl.textContent = 'Set up your initial ' + selectedRole.name + ' account in SQLite to get started.';
+          nameField.hidden = false;
+          nameInput.required = true;
+          if (!nameInput.value) nameInput.value = profile.name || '';
+          blockLotField.hidden = role !== 'resident';
+          blockLotInput.required = role === 'resident';
+          if (role === 'resident' && !blockLotInput.value) blockLotInput.value = profile.blockLot || '';
+          if (!emailInput.value) emailInput.value = profile.email || '';
+          passwordLabel.textContent = 'Create Password';
+          passwordInput.placeholder = 'Choose a password (min 6 characters)';
+          passwordInput.autocomplete = 'new-password';
+          passwordInput.minLength = 6;
+          passwordHint.textContent = 'This password will be saved securely for future logins.';
+          passwordHint.hidden = false;
+          submitBtn.textContent = 'Create Account & Continue';
+          regWrap.hidden = true;
+        } else if (mode === 'register') {
+          titleEl.textContent = 'Create Resident Account';
+          descEl.textContent = 'Register your household account for Camella Homes Urdaneta.';
+          nameField.hidden = false;
+          nameInput.required = true;
+          nameInput.value = '';
+          blockLotField.hidden = false;
+          blockLotInput.required = true;
+          blockLotInput.value = '';
+          emailInput.value = '';
+          passwordLabel.textContent = 'Password';
+          passwordInput.placeholder = 'Choose a password (min 6 characters)';
+          passwordInput.autocomplete = 'new-password';
+          passwordInput.minLength = 6;
+          passwordHint.textContent = '';
+          passwordHint.hidden = true;
+          submitBtn.textContent = 'Register & Continue';
+          regWrap.hidden = false;
+          regLabel.textContent = 'Already have an account?';
+          regBtn.textContent = 'Sign in instead';
+        } else {
+          titleEl.textContent = selectedRole.name + ' Log in';
+          descEl.textContent = selectedRole.description;
+          nameField.hidden = true;
+          nameInput.required = false;
+          blockLotField.hidden = true;
+          blockLotInput.required = false;
+          if (!emailInput.value && profile.email) emailInput.value = profile.email;
+
+          const isEnv = Boolean(statusData?.envPasscodeConfigured);
+          passwordLabel.textContent = isEnv ? 'Role Passcode' : 'Password';
+          passwordInput.placeholder = isEnv ? 'Enter configured passcode' : 'Enter your password';
+          passwordInput.autocomplete = 'current-password';
+          passwordInput.minLength = isEnv ? 1 : 6;
+          passwordHint.textContent = isEnv ? 'Using passcode from server environment settings.' : '';
+          passwordHint.hidden = !isEnv;
+          submitBtn.textContent = 'Log in';
+
+          if (role === 'resident' && !isEnv) {
+            regWrap.hidden = false;
+            regLabel.textContent = 'New resident?';
+            regBtn.textContent = 'Create an account';
+          } else {
+            regWrap.hidden = true;
+          }
+        }
+        submitBtn.disabled = false;
+      }
+
+      async function fetchAuthStatus() {
+        const url = './api/auth/status?role=' + encodeURIComponent(role);
+        let res = await fetch(url, { credentials: 'same-origin', cache: 'no-store' });
+        if (res.status >= 500) {
+          await new Promise(r => setTimeout(r, 250));
+          res = await fetch(url, { credentials: 'same-origin', cache: 'no-store' });
+        }
+        const ct = (res.headers.get('content-type') || '').toLowerCase();
+        if (!res.ok || !ct.includes('application/json')) {
+          throw new Error('NO_BACKEND');
+        }
+        return res.json();
+      }
+
+      async function init() {
+        titleEl.textContent = selectedRole.name + ' Log in';
+        if (reason === 'session') {
+          showError('Please sign in to access your ' + selectedRole.name + ' dashboard.');
+        }
+
+        try {
+          statusData = await fetchAuthStatus();
+        } catch (err) {
+          descEl.textContent = 'Backend server is unreachable.';
+          showError('Unable to reach the server. Please start the app with "npm run dev" on port 3000 and refresh.');
+          submitBtn.disabled = true;
+          return;
+        }
+
+        if (statusData.currentUser) {
+          const cur = statusData.currentUser;
+          existingBanner.hidden = false;
+          if (cur.role === role) {
+            existingText.textContent = 'Signed in as ' + cur.name + ' (' + cur.email + ').';
+            continueBtn.hidden = false;
+            continueBtn.textContent = 'Continue to ' + selectedRole.name + ' dashboard';
+            continueBtn.onclick = () => {
+              window.location.href = selectedRole.destination;
+            };
+          } else {
+            const curLabel = roles[cur.role]?.name || cur.role;
+            existingText.textContent = 'Currently signed in as ' + cur.name + ' (' + curLabel + '). Switch accounts to sign in as ' + selectedRole.name + '.';
+            continueBtn.hidden = true;
+          }
+        } else {
+          existingBanner.hidden = true;
+        }
+
+        applyMode(statusData.hasClaimedUser ? 'login' : 'setup');
+      }
+
+      switchBtn.addEventListener('click', async () => {
+        try {
+          await fetch('./api/auth/logout', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'X-Requested-With': 'fetch' },
+          });
+        } catch (e) { }
+        existingBanner.hidden = true;
+        clearError();
+      });
+
+      regBtn.addEventListener('click', () => {
+        applyMode(mode === 'register' ? 'login' : 'register');
+      });
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        clearError();
+        submitBtn.disabled = true;
+
+        const endpoint =
+          mode === 'setup'
+            ? './api/auth/setup'
+            : mode === 'register'
+              ? './api/auth/register'
+              : './api/auth/login';
+
+        const payload = {
+          role,
+          email: emailInput.value.trim(),
+          password: passwordInput.value,
+        };
+        if (mode === 'setup' || mode === 'register') {
+          payload.name = nameInput.value.trim();
+          if (role === 'resident') {
+            payload.blockLot = blockLotInput.value.trim();
+          }
+        }
+
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'fetch',
+            },
+            body: JSON.stringify(payload),
+          });
+          const body = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            showError(body.error || 'Could not sign in. Please check your details.');
+            submitBtn.disabled = false;
+            return;
+          }
+
+          // Confirm session cookie persisted before redirecting to protected page
+          const meRes = await fetch('./api/auth/me', {
+            credentials: 'same-origin',
+            cache: 'no-store',
+          });
+          if (!meRes.ok) {
+            showError('Sign-in succeeded, but your browser blocked the session cookie in this preview frame. Open the app in a new tab or allow cookies for this site.');
+            submitBtn.disabled = false;
+            return;
+          }
+
+          window.location.href = selectedRole.destination;
+        } catch (err) {
+          showError('Unable to reach the server. Please refresh and try again.');
+          submitBtn.disabled = false;
+        }
+      });
+
+      init();
+    })();
   </script>
 
 </body>
